@@ -110,10 +110,10 @@ const Assistant = () => {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-8rem)] bg-white dark:bg-gray-800 rounded-xl shadow-inner border border-gray-200 dark:border-gray-700 overflow-hidden">
+    <div className="flex flex-col h-full bg-white dark:bg-gray-800 rounded-xl shadow-inner border border-gray-200 dark:border-gray-700 overflow-hidden">
       {/* Header */}
-      <div className="bg-gradient-to-b from-primary/10 to-transparent p-6 border-b border-primary/10 flex flex-col items-center justify-center relative">
-        <div className="w-60 h-60 rounded-full overflow-hidden shadow-md border-4 border-white dark:border-gray-700 bg-white dark:bg-gray-800 mb-3 relative transition-transform hover:scale-105 duration-300">
+      <div className="bg-gradient-to-b from-primary/10 to-transparent p-4 md:p-6 border-b border-primary/10 flex flex-col items-center justify-center relative flex-shrink-0">
+        <div className="w-32 h-32 md:w-48 md:h-48 lg:w-60 lg:h-60 rounded-full overflow-hidden shadow-md border-4 border-white dark:border-gray-700 bg-white dark:bg-gray-800 mb-3 relative transition-transform hover:scale-105 duration-300 flex-shrink-0">
           <img 
             src={isBlinking ? "/Hoviuia1.png" : "/Hoviuia.png"} 
             alt="AI Avatar" 
