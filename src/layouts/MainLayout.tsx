@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { Calendar, LayoutDashboard, LogOut, Network, Sparkles, Bell } from 'lucide-react';
+import { Calendar, LayoutDashboard, LogOut, Network, Sparkles, Bell, Menu, X } from 'lucide-react';
 import { getNotifications, markAsRead } from '../api/notifications';
 import type { Notification } from '../api/notifications';
 
@@ -10,6 +10,7 @@ const MainLayout = () => {
   const location = useLocation();
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [showNotifications, setShowNotifications] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const navItems = [
@@ -57,8 +58,16 @@ const MainLayout = () => {
 
   return (
     <div className="flex h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 overflow-hidden">
+      {/* Mobile Overlay */}
+      {isMobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-20 md:hidden transition-opacity" 
+          onClick={() => setIsMobileMenuOpen(false)} 
+        />
+      )}
+
       {/* Sidebar */}
-      <aside className="w-64 bg-white dark:bg-gray-800 shadow-lg flex flex-col z-20">
+      <aside className={`fixed inset-y-0 left-0 transform ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} md:relative md:translate-x-0 transition-transform duration-200 ease-in-out w-64 bg-white dark:bg-gray-800 shadow-lg flex flex-col z-30`}>
         <div className="p-6 border-b dark:border-gray-700">
           <div className="flex items-center gap-2 text-primary">
             <Calendar className="w-8 h-8" />
@@ -74,6 +83,7 @@ const MainLayout = () => {
               <Link
                 key={item.path}
                 to={item.path}
+                onClick={() => setIsMobileMenuOpen(false)}
                 className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                   isActive
                     ? 'bg-primary text-white'
@@ -109,10 +119,18 @@ const MainLayout = () => {
 
       {/* Main Content */}
       <main className="flex-1 flex flex-col h-full overflow-hidden">
-        <header className="h-16 bg-white dark:bg-gray-800 shadow-sm flex items-center justify-between px-8 flex-shrink-0 z-10">
-          <h2 className="text-xl font-semibold capitalize">
-            {navItems.find((item) => item.path === location.pathname)?.name || 'Agenda'}
-          </h2>
+        <header className="h-16 bg-white dark:bg-gray-800 shadow-sm flex items-center justify-between px-4 md:px-8 flex-shrink-0 z-10">
+          <div className="flex items-center gap-4">
+            <button 
+              onClick={() => setIsMobileMenuOpen(true)}
+              className="p-2 -ml-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 md:hidden"
+            >
+              <Menu className="w-6 h-6" />
+            </button>
+            <h2 className="text-xl font-semibold capitalize hidden sm:block">
+              {navItems.find((item) => item.path === location.pathname)?.name || 'Agenda'}
+            </h2>
+          </div>
           
           <div className="relative" ref={dropdownRef}>
             <button 
