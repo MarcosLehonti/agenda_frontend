@@ -13,6 +13,20 @@ const Assistant = () => {
   const [isListening, setIsListening] = useState(false);
   const recognitionRef = useRef<any>(null);
 
+  // Efecto de parpadeo (abrir y cerrar los ojos)
+  useEffect(() => {
+    const blink = () => {
+      setIsBlinking(true); // Ojos cerrados
+      setTimeout(() => {
+        setIsBlinking(false); // Ojos abiertos
+      }, 150); // Cerrado por 150ms
+    };
+
+    // Parpadea cada 3.5 segundos
+    const interval = setInterval(blink, 3500);
+    return () => clearInterval(interval);
+  }, []);
+
   useEffect(() => {
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (SpeechRecognition) {
