@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { Calendar, LayoutDashboard, LogOut, Network, Sparkles, Bell, Menu, X } from 'lucide-react';
+import { Calendar, LayoutDashboard, LogOut, Network, Sparkles, Bell, Menu } from 'lucide-react';
 import { getNotifications, markAsRead } from '../api/notifications';
 import type { Notification } from '../api/notifications';
 
